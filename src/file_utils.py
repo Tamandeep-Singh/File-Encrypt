@@ -26,7 +26,7 @@ def write_to_file(filename, data, mode):
     file = open(filename, mode)
     file.write(data)
     file.close()
-    file_utils_logger.log(f"<write_to_file: written file data to {filename}")
+    file_utils_logger.log(f"<write_to_file: wrote file data to {filename}")
 
 
 def write_to_file_json(filename, data, mode):
@@ -34,7 +34,7 @@ def write_to_file_json(filename, data, mode):
     data = json.dumps(data)
     file.write(data)
     file.close()
-    file_utils_logger.log(f"<write_to_file_json: written file data to {filename}")
+    file_utils_logger.log(f"<write_to_file_json: wrote file data to {filename}")
 
     
 
