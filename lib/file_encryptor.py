@@ -46,21 +46,27 @@ def save_to_json_file(filename:str, data:str) -> None:
     FileUtils.write_to_file_json(encryption_filename, data, 'w')
 
 
-def process_file_data() -> None:
+def process_file_data(filename: str = None) -> None:
     """Processes the file chosen by the user and produces the encrypted output into a JSON file"""
-    filename = input("Enter the filename for the file you want to encrypt: ")
+    if filename is None:
+        filename = input("Enter the filename for the file you want to encrypt: ")
+
     file_data = FileUtils.get_file_data(filename, 'rb')
+
     if file_data is None:
         return
-    
+
     encrypted_file_data = fernet_encryptor.encrypt(file_data).decode('utf-8')
     file_encryptor_logger.log(f"<process_file_data>: Encrypted File Data -> Result: {encrypted_file_data}")
     save_to_json_file(filename, encrypted_file_data)
 
 
-def decrypt_json_file() -> None:
+def decrypt_json_file(json_filename:str = None) -> None:
     """Decrypts an encrypted JSON file and prints the decrypted data."""
-    json_filename = input("Enter the encrypted JSON filename: ")
+
+    if json_filename is None:
+        json_filename = input("Enter the encrypted JSON filename: ")
+        
     json_data = json.loads(FileUtils.get_file_data(json_filename, 'r'))
     if json_data is None:
         return
