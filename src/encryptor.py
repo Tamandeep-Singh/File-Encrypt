@@ -7,12 +7,16 @@
 # -----------------------------------------------------------
 
 from cryptography.fernet import Fernet
+from logger import Logger
+import file_utils as FileUtils
+
+encryptor_logger = Logger("[Encryptor]")
 
 class Encryptor:
-    def __init__(self, key: bytes):
+    def __init__(self):
         """Constructor that initializes the fernet object with the key that is provided."""
-        self.key = key
-        self.fernet = Fernet(key)
+        self.key = Encryptor.get_encryptor_key()
+        self.fernet = Fernet(self.key)
 
     def encrypt(self, data:bytes) -> bytes:
         """Returns the encrypted bytes of the data parameter."""
@@ -22,13 +26,21 @@ class Encryptor:
         """Returns the decrypted bytes of the encrypted_data parameter."""
         return self.fernet.decrypt(encrypted_data)
 
-    def get_instance(self):
-        """Returns the current Encryptor instance."""
-        return self
-
     @staticmethod
     def generate_random_key() -> bytes:
         """Static method that returns a randomized url-safe 32 character base64 encoded key in bytes."""
         return Fernet.generate_key()
+
+    @staticmethod
+    def get_encryptor_key() -> bytes:
+        """Returns the encryption key from the key file or if not found, generates a random key and saves it to the key file."""
+        key_filename = "../cryptography_key.txt"
+        key = FileUtils.get_file_data(key_filename, 'rb')
+        if key is None:
+            key = Encryptor.generate_random_key()
+            encryptor_logger.log(f"<get_encryptor_key>: Key file not found. Created Random Key: {key}")
+            FileUtils.write_to_file("../cryptography_key.txt", key.decode('utf-8'), "w")
+        return key
+    
 
     
