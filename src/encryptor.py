@@ -22,7 +22,13 @@ class Encryptor:
         """Returns the decrypted bytes of the encrypted_data parameter."""
         return self.fernet.decrypt(encrypted_data)
 
+    def get_instance(self):
+        """Returns the current Encryptor instance."""
+        return self
+
     @staticmethod
     def generate_random_key() -> bytes:
         """Static method that returns a randomized url-safe 32 character base64 encoded key in bytes."""
         return Fernet.generate_key()
+
+    
