@@ -32,6 +32,16 @@ class Encryptor:
         return Fernet.generate_key()
 
     @staticmethod
+    def get_string(data: bytes) -> str:
+        """Returns the data parameter (in bytes) to its equivalent string representation."""
+        return data.decode('utf-8')
+
+    @staticmethod
+    def get_bytes(data: str) -> bytes:
+        """Returns the data parameter (as a string) to its equivalent bytes representation."""
+        return data.encode('utf-8')
+
+    @staticmethod
     def get_encryptor_key() -> bytes:
         """Returns the encryption key from the key file or if not found, generates a random key and saves it to the key file."""
         key_filename = "../cryptography_key.txt"
