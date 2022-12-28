@@ -6,11 +6,11 @@ from logger import Logger
 
 file_encryptor_logger = Logger("[FileEncryptor]")
 
-def get_epoch_timestamp():
+def get_epoch_timestamp() -> int:
     return int(time.time())
 
 
-def get_encryptor_instance():
+def get_encryptor_instance() -> Encryptor:
     key_filename = "../cryptography_key.txt"
     key = FileUtils.get_file_data(key_filename, 'rb')
     if key is None:
@@ -21,7 +21,7 @@ def get_encryptor_instance():
     return Encryptor(key)
 
 
-def save_to_json_file(filename, data):
+def save_to_json_file(filename:str, data:str) -> None:
     original_file = FileUtils.get_file_without_ext(filename)
     encryption_filename = original_file + "_encrypted.json"
     data = { 
@@ -34,7 +34,7 @@ def save_to_json_file(filename, data):
 
         
 
-def process_file_data(filename):
+def process_file_data(filename:str) -> None:
     file_data = FileUtils.get_file_data(filename, 'rb')
     if file_data is None:
         return
