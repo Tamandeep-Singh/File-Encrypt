@@ -14,26 +14,24 @@ from logger import Logger
 
 
 file_encryptor_logger = Logger("[FileEncryptor]")
+fernet_encryptor = Encryptor()
 
 def get_epoch_timestamp() -> int:
     """Returns the current Unix Epoch Timestamp."""
     return int(time.time())
 
 
-def get_filename() -> str:
-    """Gets the filename that the user wants to encrypt."""
-    return input("Enter the filename for the file you want to encrypt: ")
+def get_user_option() -> int:
+    """Loops the menu until a valid option is entered and returned."""
+    option = -1
+    print("File Encryption: Menu")
+    print("1. Encrypt File")
+    print("2. Decrypt File")
+    while option != 1 and option != 2:
+        option = int(input ("Enter your option: "))
 
-def get_encryptor_instance() -> Encryptor:
-    """Creates and returns a new Encryptor instance with the key either being already provided or randomly generated."""
-    key_filename = "../cryptography_key.txt"
-    key = FileUtils.get_file_data(key_filename, 'rb')
-    if key is None:
-        key = Encryptor.generate_random_key()
-        file_encryptor_logger.log(f"<get_crypto_key>: Key file not found. Created Random Key: {key}")
-        FileUtils.write_to_file("../cryptography_key.txt", key.decode('utf-8'), "w")
-    
-    return Encryptor(key)
+    return option
+        
 
 
 def save_to_json_file(filename:str, data:str) -> None:
@@ -48,36 +46,38 @@ def save_to_json_file(filename:str, data:str) -> None:
     FileUtils.write_to_file_json(encryption_filename, data, 'w')
 
 
-def process_file_data(filename:str) -> None:
+def process_file_data() -> None:
     """Processes the file chosen by the user and produces the encrypted output into a JSON file"""
+    filename = input("Enter the filename for the file you want to encrypt: ")
     file_data = FileUtils.get_file_data(filename, 'rb')
     if file_data is None:
         return
     
-    fernet_encryptor = get_encryptor_instance()
     encrypted_file_data = fernet_encryptor.encrypt(file_data).decode('utf-8')
     file_encryptor_logger.log(f"<process_file_data>: Encrypted File Data -> Result: {encrypted_file_data}")
     save_to_json_file(filename, encrypted_file_data)
 
 
 def decrypt_json_file() -> None:
+    """Decrypts an encrypted JSON file and prints the decrypted data."""
     json_filename = input("Enter the encrypted JSON filename: ")
-    file_exists = FileUtils.does_file_exist(json_filename)
-    if not file_exists:
-        file_encryptor_logger.log(f"<decrypt_json_file>: Could not locate encrypted JSON file: {json_filename}")
-    
-    json_data = json.load(FileUtils.get_file_data(json_filename, 'r'))
-    encrypted_data = json_data['data']
-    print(encrypted_data)
+    json_data = json.loads(FileUtils.get_file_data(json_filename, 'r'))
+    if json_data is None:
+        return
+    encrypted_data = json_data['data'].encode('utf-8')
+    decrypted_data = fernet_encryptor.decrypt(encrypted_data).decode('utf-8')
+    file_encryptor_logger.log(f"<decrypt_json_file>: Decrypted data: {decrypted_data}")
 
     
 
 def main() -> None:
     """Main method that controls the execution of getting the filename from the user and encrypting the file."""
-    filename = get_filename()
-    process_file_data(filename)
-    decrypt_json_file()
-
+    option = get_user_option()
+    if option == 1:
+        process_file_data()
+    elif option == 2:
+        decrypt_json_file()
+    
 
 if __name__ == "__main__":
     main()
