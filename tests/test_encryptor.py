@@ -9,7 +9,7 @@
 
 import unittest
 import sys
-sys.path.insert(0, '/home/tam/Projects/File-Encryptor/src')
+sys.path.insert(0, '/home/tam/Projects/File-Encryptor/lib')
 from encryptor import Encryptor
 
 class TestEncryptor(unittest.TestCase):
