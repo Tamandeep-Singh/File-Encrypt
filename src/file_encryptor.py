@@ -10,6 +10,9 @@ def get_epoch_timestamp() -> int:
     return int(time.time())
 
 
+def get_filename() -> str:
+    return input("Enter the filename for the file you want to encrypt: ")
+
 def get_encryptor_instance() -> Encryptor:
     key_filename = "../cryptography_key.txt"
     key = FileUtils.get_file_data(key_filename, 'rb')
@@ -46,6 +49,10 @@ def process_file_data(filename:str) -> None:
 
     
 
+def main() -> None:
+    filename = get_filename()
+    process_file_data(filename)
 
 
-process_file_data("../test.txt")
+if __name__ == "__main__":
+    main()
