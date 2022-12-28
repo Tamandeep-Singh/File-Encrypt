@@ -7,6 +7,7 @@
 # -----------------------------------------------------------
 
 import file_utils as FileUtils
+import json
 import time
 from encryptor import Encryptor
 from logger import Logger
@@ -47,8 +48,6 @@ def save_to_json_file(filename:str, data:str) -> None:
     FileUtils.write_to_file_json(encryption_filename, data, 'w')
 
 
-        
-
 def process_file_data(filename:str) -> None:
     """Processes the file chosen by the user and produces the encrypted output into a JSON file"""
     file_data = FileUtils.get_file_data(filename, 'rb')
@@ -60,12 +59,24 @@ def process_file_data(filename:str) -> None:
     file_encryptor_logger.log(f"<process_file_data>: Encrypted File Data -> Result: {encrypted_file_data}")
     save_to_json_file(filename, encrypted_file_data)
 
+
+def decrypt_json_file() -> None:
+    json_filename = input("Enter the encrypted JSON filename: ")
+    file_exists = FileUtils.does_file_exist(json_filename)
+    if not file_exists:
+        file_encryptor_logger.log(f"<decrypt_json_file>: Could not locate encrypted JSON file: {json_filename}")
+    
+    json_data = json.load(FileUtils.get_file_data(json_filename, 'r'))
+    encrypted_data = json_data['data']
+    print(encrypted_data)
+
     
 
 def main() -> None:
     """Main method that controls the execution of getting the filename from the user and encrypting the file."""
     filename = get_filename()
     process_file_data(filename)
+    decrypt_json_file()
 
 
 if __name__ == "__main__":
