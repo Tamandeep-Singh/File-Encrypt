@@ -1,20 +1,20 @@
 # -----------------------------------------------------------
-# filename: file_encryptor.py
+# filename: file_encrypt.py
 #
 # Description: Main python script that is used to encrypt a file's contents and save the encrypted data into a corresponding JSON file
-# Github Repo: https://github.com/Tamandeep-Singh/File-Encryptor
+# Github Repo: https://github.com/Tamandeep-Singh/File-Encrypt
 # Released under MIT License 
 # -----------------------------------------------------------
 
 import file_utils as FileUtils
 import json
 import time
-from encryptor import Encryptor
+from fernet_encrypt import FernetEncrypt
 from logger import Logger
 
 
-file_encryptor_logger = Logger("[FileEncryptor]")
-fernet_encryptor = Encryptor()
+file_encryptor_logger = Logger("[FileEncrypt]")
+fernet_encrypt = FernetEncrypt()
 
 def get_epoch_timestamp() -> int:
     """Returns the current Unix Epoch Timestamp."""
@@ -56,7 +56,7 @@ def process_file_data(filename: str = None) -> None:
     if file_data is None:
         return
 
-    encrypted_file_data = fernet_encryptor.encrypt(file_data).decode('utf-8')
+    encrypted_file_data = fernet_encrypt.encrypt(file_data).decode('utf-8')
     file_encryptor_logger.log(f"<process_file_data>: Encrypted File Data -> Result: {encrypted_file_data}")
     save_to_json_file(filename, encrypted_file_data)
 
@@ -71,7 +71,7 @@ def decrypt_json_file(json_filename:str = None) -> None:
     if json_data is None:
         return
     encrypted_data = json_data['data'].encode('utf-8')
-    decrypted_data = fernet_encryptor.decrypt(encrypted_data).decode('utf-8')
+    decrypted_data = fernet_encrypt.decrypt(encrypted_data).decode('utf-8')
     file_encryptor_logger.log(f"<decrypt_json_file>: Decrypted data: {decrypted_data}")
 
     

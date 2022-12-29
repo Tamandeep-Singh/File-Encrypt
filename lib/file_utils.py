@@ -2,7 +2,7 @@
 # filename: file_utils.py
 #
 # Description: Provides a wrapper around common file I/O functions 
-# Github Repo: https://github.com/Tamandeep-Singh/File-Encryptor
+# Github Repo: https://github.com/Tamandeep-Singh/File-Encrypt
 # Released under MIT License 
 # -----------------------------------------------------------
 

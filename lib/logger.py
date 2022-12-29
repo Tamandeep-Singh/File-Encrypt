@@ -2,7 +2,7 @@
 # filename: logger.py
 #
 # Description: Basic logger class that can be expanded upon for future projects
-# Github Repo: https://github.com/Tamandeep-Singh/File-Encryptor
+# Github Repo: https://github.com/Tamandeep-Singh/File-Encrypt
 # Released under MIT License 
 # -----------------------------------------------------------
 

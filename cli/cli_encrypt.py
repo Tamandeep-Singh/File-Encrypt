@@ -1,7 +1,7 @@
 import sys
 import argparse
 sys.path.insert(0, '/home/tam/Projects/File-Encryptor/lib')
-import file_encryptor as FileEncryptor
+import file_encrypt as FileEncrypt
 
 parser = argparse.ArgumentParser(
     prog="File Encryptor CLI",
@@ -15,7 +15,7 @@ parser.add_argument("-d", "--decrypt", help="decrypts an encrypted JSON file and
 args = parser.parse_args()
 
 if args.filename and args.encrypt:
-    FileEncryptor.process_file_data(args.filename)
+    FileEncrypt.process_file_data(args.filename)
 
 if args.filename and args.decrypt:
-    FileEncryptor.decrypt_json_file(args.filename)
+    FileEncrypt.decrypt_json_file(args.filename)

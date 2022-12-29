@@ -1,8 +1,8 @@
 # -----------------------------------------------------------
-# filename: encryptor.py
+# filename: fernet_encrypt.py
 #
 # Description: Provides a wrapper around the Fernet class so that data can easily be encrypted and decrypted
-# Github Repo: https://github.com/Tamandeep-Singh/File-Encryptor
+# Github Repo: https://github.com/Tamandeep-Singh/File-Encrypt
 # Released under MIT License 
 # -----------------------------------------------------------
 
@@ -10,12 +10,12 @@ from cryptography.fernet import Fernet
 from logger import Logger
 import file_utils as FileUtils
 
-encryptor_logger = Logger("[Encryptor]")
+encryptor_logger = Logger("[FernetEncrypt]")
 
-class Encryptor:
+class FernetEncrypt:
     def __init__(self):
         """Constructor that initializes the fernet object with the key that is provided."""
-        self.key = Encryptor.get_encryptor_key()
+        self.key = FernetEncrypt.get_encryptor_key()
         self.fernet = Fernet(self.key)
 
     def encrypt(self, data:bytes) -> bytes:
@@ -47,7 +47,7 @@ class Encryptor:
         key_filename = "../cryptography_key.txt"
         key = FileUtils.get_file_data(key_filename, 'rb')
         if key is None:
-            key = Encryptor.generate_random_key()
+            key = FernetEncrypt.generate_random_key()
             encryptor_logger.log(f"<get_encryptor_key>: Key file not found. Created Random Key: {key}")
             FileUtils.write_to_file("../cryptography_key.txt", key.decode('utf-8'), "w")
         return key
