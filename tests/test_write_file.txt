@@ -1,0 +1,1 @@
+This is some mock data to test if the data can be written to a file
