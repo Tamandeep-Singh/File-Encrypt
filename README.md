@@ -14,10 +14,12 @@ For future commits and developments, my current objectives are to create a CLI v
 
 # Todo:
 
-1) Decrypted file output should be stored in a separate JSON file
-2) Adding additional unit tests in /tests
-3) [Optional] Adding user defined filenames for encrypted files
-4) Testing CLI script via a NodeJS file so that any files that the user uploads can be encrypted
+1) Decrypted file output should be stored in a separate JSON file (status: done)
+2) Adding additional unit tests in /tests (status: done)
+3) [Optional] Adding user defined filenames for encrypted files (status: in consideration)
+4) Testing CLI script via a NodeJS file so that any files that the user uploads can be encrypted (status: not yet completed)
+5) Creating a docker image and adding a dockerfile
+
 
 
 

@@ -34,16 +34,18 @@ def get_user_option() -> int:
         
 
 
-def save_to_json_file(filename:str, data:str) -> None:
-    """Saves the encrypted file data to a JSON file with metadata detailing the timestamp and original file processed."""
+def save_to_json_file(filename:str, data:str, action:str) -> None:
+    """Saves data (either encrypted or decrypted) to a specifically named JSON file."""
+
+    #action is the string values: encrypted OR decrypted
     original_file = FileUtils.get_file_without_ext(filename)
-    encryption_filename = original_file + "_encrypted.json"
+    new_filename = f"{original_file}_{action}.json"
     data = { 
         'processed_file': filename,
         'data': data,
         'timestamp': get_epoch_timestamp()
     }
-    FileUtils.write_to_file_json(encryption_filename, data, 'w')
+    FileUtils.write_to_file_json(new_filename, data, 'w')
 
 
 def process_file_data(filename: str = None) -> None:
@@ -58,7 +60,7 @@ def process_file_data(filename: str = None) -> None:
 
     encrypted_file_data = fernet_encrypt.encrypt(file_data).decode('utf-8')
     file_encryptor_logger.log(f"<process_file_data>: Encrypted File Data -> Result: {encrypted_file_data}")
-    save_to_json_file(filename, encrypted_file_data)
+    save_to_json_file(filename, encrypted_file_data, "encrypted")
 
 
 def decrypt_json_file(json_filename:str = None) -> None:
@@ -71,10 +73,10 @@ def decrypt_json_file(json_filename:str = None) -> None:
     if json_data is None:
         return
     encrypted_data = json_data['data'].encode('utf-8')
+    processed_file = json_data['processed_file']
     decrypted_data = fernet_encrypt.decrypt(encrypted_data).decode('utf-8')
-    file_encryptor_logger.log(f"<decrypt_json_file>: Decrypted data: {decrypted_data}")
+    save_to_json_file(processed_file, decrypted_data, "decrypted")
 
-    
 
 def main() -> None:
     """Main method that controls the execution of getting the filename from the user and encrypting the file."""
