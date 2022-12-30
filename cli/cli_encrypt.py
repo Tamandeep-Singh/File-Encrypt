@@ -23,6 +23,7 @@ def process_args(parser: argparse.ArgumentParser) -> None:
     args = parser.parse_args()
     #check if no args passed
     if not len(sys.argv) > 1:
+        print("No arguments passed, please refer to the help guide below: \n")
         parser.print_help()
         
     if args.filename and args.encrypt:
