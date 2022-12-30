@@ -9,6 +9,7 @@
 import os
 import json
 from logger import Logger
+from typing import Optional
 
 
 file_utils_logger = Logger("[FileUtils]")
@@ -18,7 +19,7 @@ def does_file_exist(filename:str) -> bool:
     return os.path.exists(filename)
     
     
-def get_file_data(filename:str, mode:str) -> str | None:
+def get_file_data(filename:str, mode:str) -> Optional[str]:
     """Reads and returns a file's content or returns None if the file does not exist."""
     file_exists = does_file_exist(filename)
     if file_exists:
