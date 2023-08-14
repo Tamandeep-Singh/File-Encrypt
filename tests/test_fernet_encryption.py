@@ -9,7 +9,7 @@
 
 import unittest
 import sys
-sys.path.insert(0, '/home/tam/Projects/File-Encrypt/lib')
+sys.path.insert(0, '/home/tam/projects/file-encrypt/lib')
 from fernet_encrypt import FernetEncrypt
 
 class TestFernetEncrypt(unittest.TestCase):
