@@ -1,6 +1,6 @@
 import sys
 import argparse
-sys.path.insert(0, '/home/tam/Projects/File-Encrypt/lib')
+sys.path.insert(0, '/home/tam/projects/file-encrypt/lib')
 import file_encrypt as FileEncrypt
 
 def get_parser() -> argparse.ArgumentParser:
