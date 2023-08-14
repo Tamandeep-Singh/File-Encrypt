@@ -9,7 +9,7 @@
 import unittest
 import json
 import sys
-sys.path.insert(0, '/home/tam/Projects/File-Encrypt/lib')
+sys.path.insert(0, '/home/tam/projects/file-encrypt/lib')
 import file_utils as FileUtils
 
 class TestFileUtils(unittest.TestCase):
